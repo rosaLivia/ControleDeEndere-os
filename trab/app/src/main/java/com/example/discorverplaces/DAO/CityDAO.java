@@ -20,4 +20,8 @@ public interface CityDAO {
 
     @Delete
     void delete(City city);
+
+
+
+
 }

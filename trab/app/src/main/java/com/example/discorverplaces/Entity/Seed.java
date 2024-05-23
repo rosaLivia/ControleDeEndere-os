@@ -4,8 +4,8 @@ package com.example.discorverplaces.Entity;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
-@Entity(primaryKeys = {"endereçoID"}, foreignKeys = @ForeignKey(entity = City.class,  parentColumns = "enderecoID",
-        childColumns = "cidadeID",
+@Entity(primaryKeys = {"enderecoID"}, foreignKeys = @ForeignKey(entity = City.class, parentColumns = "cidadeID",
+        childColumns = "enderecoID",
         onDelete = ForeignKey.CASCADE))
 public class Seed {
 
