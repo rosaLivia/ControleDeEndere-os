@@ -25,7 +25,9 @@ public class Cadastro extends AppCompatActivity {
         Button   bntSalvar    = findViewById(R.id.bntSalvar);
 
 
-        User Usario =  new User();
+        User U =  new User();
+        U.nome = editxtNome.getText().toString();
+        U.Email
 
 
 
