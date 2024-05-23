@@ -4,35 +4,42 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.discorverplaces.R;
 
 public class Login extends AppCompatActivity {
 
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        Button btnGoToMain = findViewById(R.id.Login);
-        btnGoToMain.setOnClickListener(new View.OnClickListener() {
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Iniciando a atividade MainActivity
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Login.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Realize a lógica de login aqui, como autenticação com um servidor ou validação local
+                    // Aqui vamos apenas navegar para a MainActivity como exemplo
+                    Intent intent = new Intent(Login.this, TelaCidadeEndereco.class);
+                    startActivity(intent);
+                }
             }
         });
     }
