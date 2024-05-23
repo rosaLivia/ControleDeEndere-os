@@ -1,9 +1,6 @@
 package com.example.discorverplaces.View;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,27 +10,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.discorverplaces.R;
 
-public class Login extends AppCompatActivity {
+public class TelaCidadeEndereco extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_tela_cidade_endereco);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-
-        Button btnGoToMain = findViewById(R.id.Login);
-        btnGoToMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Iniciando a atividade MainActivity
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
-            }
         });
     }
 }

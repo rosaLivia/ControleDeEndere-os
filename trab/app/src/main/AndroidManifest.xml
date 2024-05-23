@@ -13,25 +13,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DiscorverPlaces"
         tools:targetApi="31">
-
+        <activity
+            android:name=".View.TelaCidadeEndereco"
+            android:exported="false" />
+        <activity
+            android:name=".View.TelaCidade"
+            android:exported="false" />
         <activity
             android:name=".View.Login"
             android:exported="false" />
-
         <activity
             android:name=".View.TelaInicial"
             android:exported="true"
             android:theme="@style/Theme.DiscorverPlaces">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".View.MainActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>

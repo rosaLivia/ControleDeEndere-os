@@ -8,12 +8,13 @@
     tools:context=".View.Login">
 
     <Button
-        android:id="@+id/btnGoToMain"
+        android:id="@+id/Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ir para Main"
+        android:text="logar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.891"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="588dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
