@@ -1,8 +1,9 @@
 package com.example.discorverplaces.Entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 
-@Entity(primaryKeys = {"userID"})
+@Entity(primaryKeys = {"userID"}, indices = {@Index(value = {"userID"}, unique = true)})
 public class User {
     private int userID;
 

@@ -14,7 +14,7 @@ import com.example.discorverplaces.Entity.Seed;
 import com.example.discorverplaces.Entity.User;
 
 
-@Database(entities = {User.class, City.class, Seed.class}, version = 1)
+@Database(entities = {User.class, City.class, Seed.class}, version = 1,exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
     private static volatile AppDataBase INSTANCE;
     public abstract UserDAO userDAO();
