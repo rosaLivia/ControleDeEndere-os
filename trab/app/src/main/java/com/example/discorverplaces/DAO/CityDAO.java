@@ -5,20 +5,19 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.discorverplaces.Entity.User;
+import com.example.discorverplaces.Entity.City;
+
 
 import java.util.List;
 
 @Dao
-public interface UserDAO {
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+public interface CityDAO {
+
+    @Query("SELECT * FROM City")
+    List<City> getAll();
     @Insert
-    void insert(User user);
+    void insert(City city);
 
     @Delete
-    void delete(User user);
-
-
-
+    void delete(City city);
 }
