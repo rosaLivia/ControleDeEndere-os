@@ -1,18 +1,18 @@
 package com.example.discoverplaces.Entity;
 
 import androidx.room.Entity;
-import androidx.room.Index;
+import androidx.room.PrimaryKey;
 
-@Entity(primaryKeys = {"userID"}, indices = {@Index(value = {"userID"}, unique = true)})
+@Entity
 public class User {
+    @PrimaryKey(autoGenerate = true)
     private int userID;
 
     private String nome;
-
-    private String Email;
-
+    private String email;
     private String senha;
 
+    // Getters e setters
     public int getUserID() {
         return userID;
     }
@@ -30,11 +30,11 @@ public class User {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getSenha() {

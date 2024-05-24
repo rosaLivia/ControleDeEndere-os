@@ -5,11 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
 import com.example.discoverplaces.DAO.UserDAO;
@@ -70,6 +66,4 @@ public class Cadastro extends AppCompatActivity {
 
 
     }
-
-
 }
