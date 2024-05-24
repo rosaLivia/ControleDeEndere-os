@@ -5,37 +5,32 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/capa"
     tools:context=".View.TelaCidadeEndereco">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="254dp"
-        android:layout_height="268dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/m011t0447_b_social_sign_18sep22" />
 
     <Button
         android:id="@+id/buttonCidade"
         android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="140dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#15640F"
+
         android:text="Cidade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonEndereco"
         android:layout_width="200dp"
-        android:layout_height="60dp"
+        android:layout_height="200dp"
         android:layout_marginTop="64dp"
         android:layout_marginBottom="172dp"
+        android:backgroundTint="@color/verde_personalizado"
         android:text="Endereço"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCidade" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonCidade"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

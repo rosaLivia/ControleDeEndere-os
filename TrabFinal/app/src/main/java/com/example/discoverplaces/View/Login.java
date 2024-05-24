@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.discoverplaces.DB.AppDataBase;
+import com.example.discoverplaces.Entity.User;
 import com.example.discoverplaces.R;
 
 public class Login extends AppCompatActivity {
@@ -17,7 +19,8 @@ public class Login extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button btnLogin;
-    private Button btnCadastro; // Corrigido aqui
+    private Button btnCadastro;
+    private AppDataBase db;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,7 +31,9 @@ public class Login extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnCadastro = findViewById(R.id.btnCadastro); // Corrigido aqui
+        btnCadastro = findViewById(R.id.btnCadastro);
+
+        db = AppDataBase.getInstance(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,10 +44,17 @@ public class Login extends AppCompatActivity {
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(Login.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Realize a lógica de login aqui, como autenticação com um servidor ou validação local
-                    // Aqui vamos apenas navegar para a MainActivity como exemplo
-                    Intent intent = new Intent(Login.this, TelaCidadeEndereco.class);
-                    startActivity(intent);
+                    new Thread(() -> {
+                        User user = db.userDAO().login(email, password);
+                        runOnUiThread(() -> {
+                            if (user != null) {
+                                Intent intent = new Intent(Login.this, TelaCidadeEndereco.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(Login.this, "Email ou senha incorretos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }).start();
                 }
             }
         });

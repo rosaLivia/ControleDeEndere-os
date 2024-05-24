@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class User {
-    @PrimaryKey(autoGenerate = true)
-    private int userID;
+    @PrimaryKey(autoGenerate = true) public int userID;
+
 
     private String nome;
     private String email;
@@ -16,6 +16,7 @@ public class User {
     public int getUserID() {
         return userID;
     }
+
 
     public void setUserID(int userID) {
         this.userID = userID;

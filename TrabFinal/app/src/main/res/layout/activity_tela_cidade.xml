@@ -5,6 +5,80 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/capadacidade"
     tools:context=".View.TelaCidade">
 
+    <ListView
+        android:id="@+id/listCidade"
+
+        android:layout_width="250dp"
+        android:layout_height="286dp"
+        android:layout_marginBottom="132dp"
+        android:background="#BF15640F"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="75dp"
+        android:background="#8015640F"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Cidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="75dp"
+        android:background="#8015640F"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Estado"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+
+
+
+    <Button
+        android:id="@+id/btAtualiza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/verde_personalizado"
+        android:layout_marginTop="36dp"
+        android:text="Atualizar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+
+    <Button
+        android:id="@+id/btExcluir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/verde_personalizado"
+        android:layout_marginTop="36dp"
+        android:text="Excluir"
+        app:layout_constraintEnd_toStartOf="@+id/btConfirmar"
+        app:layout_constraintStart_toEndOf="@+id/btAtualiza"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+
+    <Button
+        android:id="@+id/btConfirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/verde_personalizado"
+        android:layout_marginTop="36dp"
+        android:text="Confirmar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,69 +1,91 @@
 package com.example.discoverplaces.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
-import com.example.discoverplaces.DAO.UserDAO;
 import com.example.discoverplaces.DB.AppDataBase;
 import com.example.discoverplaces.Entity.User;
 import com.example.discoverplaces.R;
 
+import java.util.List;
+
 public class Cadastro extends AppCompatActivity {
+
+    private AppDataBase db;
+    private ListView listViewUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        db = AppDataBase.getInstance(this);
+        listViewUsers = findViewById(R.id.listViewUsers);
+
+        loadUsers();
+
+        listViewUsers.setOnItemClickListener((parent, view, position, id) -> {
+            User selectedUser = (User) parent.getItemAtPosition(position);
+            Intent intent = new Intent(Cadastro.this, DeleteUser.class);
+            intent.putExtra("userId", selectedUser.getUserID());
+            startActivity(intent);
+        });
     }
 
-    public void salvar(View view){
-        EditText editxtNome   = findViewById(R.id.editxtNome);
-        EditText editxtEmail  = findViewById(R.id.editxtEmail);
-        EditText edtPassword =  findViewById(R.id.edtPassword);
+    private void loadUsers() {
+        new Thread(() -> {
+            List<User> users = db.userDAO().getAll();
+            runOnUiThread(() -> {
+                ArrayAdapter<User> adapter = new ArrayAdapter(Cadastro.this, android.R.layout.simple_list_item_2, android.R.id.text1, users) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView text1 = view.findViewById(android.R.id.text1);
+                        TextView text2 = view.findViewById(android.R.id.text2);
 
-        User U = new User();
+                        User user = users.get(position);
+                        text1.setText(user.getNome());
+                        text2.setText(user.getEmail());
 
-        U.setNome(editxtNome.getText().toString());
-        U.setEmail(editxtEmail.getText().toString());
-        U.setSenha(edtPassword.getText().toString());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    AppDataBase db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "Data-base").build();
-                    UserDAO op = db.userDAO();
-                    op.insert(U);
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(Cadastro.this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    });
-                } catch (Exception e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(Cadastro.this, "Erro ao cadastrar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }
+                        return view;
+                    }
+                };
+                listViewUsers.setAdapter(adapter);
+            });
         }).start();
     }
 
-    public void Listagem(View View){
+    public void salvar(View view) {
+        EditText editxtNome = findViewById(R.id.editxtNome);
+        EditText editxtEmail = findViewById(R.id.editxtEmail);
+        EditText edtPassword = findViewById(R.id.edtPassword);
 
+        User user = new User();
+        user.setNome(editxtNome.getText().toString());
+        user.setEmail(editxtEmail.getText().toString());
+        user.setSenha(edtPassword.getText().toString());
 
-
-
-
+        new Thread(() -> {
+            try {
+                db.userDAO().insert(user);
+                runOnUiThread(() -> {
+                    Toast.makeText(Cadastro.this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+                    loadUsers();
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Cadastro.this, "Erro ao cadastrar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        }).start();
     }
 }

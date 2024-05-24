@@ -13,10 +13,16 @@ import java.util.List;
 @Dao
 public interface UserDAO {
     @Query("SELECT * FROM User WHERE userID = :id LIMIT 1")
-    User getUsuarioPorID(int id);
+    User getUserID(int id);
 
     @Query("SELECT * FROM User")
     List<User> getAll();
+    ////////////////////////////////////////////
+    // Para deletar o usuario
+    @Query("SELECT * FROM User WHERE userId = :userId LIMIT 1")
+    User getUserById(int userId);
+    /////////////////////////////////
+
 
     @Query("SELECT * FROM User WHERE email = :email AND senha = :senha LIMIT 1")
     User login(String email, String senha);
@@ -29,4 +35,7 @@ public interface UserDAO {
 
     @Delete
     void delete(User user);
+
+
+
 }

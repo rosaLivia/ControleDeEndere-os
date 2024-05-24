@@ -1,64 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llCadastro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
-    android:background="@drawable/capadecadastro">
+    android:padding="16dp"
+    android:background="@drawable/capadecadastro"
+    tools:context=".View.Cadastro">
 
     <EditText
         android:id="@+id/editxtNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/white"
-        android:ems="10"
         android:hint="Nome"
-        android:inputType="text"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
 
     <EditText
         android:id="@+id/editxtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/white"
-        android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
 
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/white"
-        android:ems="10"
         android:hint="Senha"
         android:inputType="textPassword"
-        tools:ignore="TouchTargetSizeCheck" />
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"/>
 
     <Button
-        android:id="@+id/bntSalvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Salvar"
-        android:onClick="salvar" />
-
-    <ListView
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp" />
+        android:text="Salvar"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/verde_personalizado"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:background="@drawable/button_background"
+        android:onClick="salvar"/>
+
+    <ListView
+        android:id="@+id/listViewUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/verde_personalizado"/>
+
 
 </LinearLayout>
