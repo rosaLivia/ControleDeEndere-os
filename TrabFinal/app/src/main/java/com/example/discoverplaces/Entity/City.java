@@ -1,13 +1,14 @@
 package com.example.discoverplaces.Entity;
 
-
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(primaryKeys = {"cidadeID"} )
+@Entity
 public class City {
+    @PrimaryKey(autoGenerate = true)
     private int cidadeID;
     private String cidade;
-    private String Estado;
+    private String estado;
 
     public int getCidadeID() {
         return cidadeID;
@@ -26,15 +27,15 @@ public class City {
     }
 
     public String getEstado() {
-        return Estado;
+        return estado;
     }
 
     public void setEstado(String estado) {
-        Estado = estado;
+        this.estado = estado;
     }
 
     @Override
     public String toString() {
-        return cidade + " - " + Estado;
+        return cidade + " - " + estado;
     }
 }
