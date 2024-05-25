@@ -32,4 +32,9 @@ public class City {
     public void setEstado(String estado) {
         Estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return cidade + " - " + Estado;
+    }
 }

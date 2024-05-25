@@ -20,6 +20,7 @@ public interface CityDAO {
     @Insert
     void insert(City city);
 
+
     @Update
     void update(City city);
 

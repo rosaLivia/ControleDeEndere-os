@@ -2,6 +2,7 @@ package com.example.discoverplaces.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,17 +36,23 @@ public class Cadastro extends AppCompatActivity {
 
         listViewUsers.setOnItemClickListener((parent, view, position, id) -> {
             User selectedUser = (User) parent.getItemAtPosition(position);
-            Intent intent = new Intent(Cadastro.this, DeleteUser.class);
+            Intent intent = new Intent(Cadastro.this, EditUser.class);
             intent.putExtra("userId", selectedUser.getUserID());
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUsers();
     }
 
     private void loadUsers() {
         new Thread(() -> {
             List<User> users = db.userDAO().getAll();
             runOnUiThread(() -> {
-                ArrayAdapter<User> adapter = new ArrayAdapter(Cadastro.this, android.R.layout.simple_list_item_2, android.R.id.text1, users) {
+                ArrayAdapter<User> adapter = new ArrayAdapter<User>(Cadastro.this, android.R.layout.simple_list_item_2, android.R.id.text1, users) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
@@ -69,12 +76,34 @@ public class Cadastro extends AppCompatActivity {
         EditText editxtEmail = findViewById(R.id.editxtEmail);
         EditText edtPassword = findViewById(R.id.edtPassword);
 
-        User user = new User();
-        user.setNome(editxtNome.getText().toString());
-        user.setEmail(editxtEmail.getText().toString());
-        user.setSenha(edtPassword.getText().toString());
+        String nome = editxtNome.getText().toString();
+        String email = editxtEmail.getText().toString();
+        String senha = edtPassword.getText().toString();
+
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email inválido", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         new Thread(() -> {
+            User existingUser = db.userDAO().getUserByEmail(email);
+            if (existingUser != null) {
+                runOnUiThread(() -> {
+                    Toast.makeText(Cadastro.this, "Email já cadastrado", Toast.LENGTH_SHORT).show();
+                });
+                return;
+            }
+
+            User user = new User();
+            user.setNome(nome);
+            user.setEmail(email);
+            user.setSenha(senha);
+
             try {
                 db.userDAO().insert(user);
                 runOnUiThread(() -> {

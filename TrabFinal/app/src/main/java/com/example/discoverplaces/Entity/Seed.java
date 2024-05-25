@@ -3,18 +3,20 @@ package com.example.discoverplaces.Entity;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
-@Entity(primaryKeys = {"enderecoID"}, foreignKeys = @ForeignKey(entity = City.class, parentColumns = "cidadeID",
-        childColumns = "enderecoID",
-        onDelete = ForeignKey.CASCADE))
+@Entity(foreignKeys = @ForeignKey(entity = City.class, parentColumns = "cidadeID", childColumns = "CityIDFK", onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE ))
 public class Seed {
 
-    private int enderecoID;
+    @PrimaryKey(autoGenerate = true) private int enderecoID;
+
     private String descricao;
 
     private double latitude;
 
     private double longitude;
+    private int CityIDFK;
 
     public int getEnderecoID() {
         return enderecoID;
@@ -46,5 +48,14 @@ public class Seed {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+
+    public int getCityIDFK() {
+        return CityIDFK;
+    }
+
+    public void setCityIDFK(int cityIDFK) {
+        CityIDFK = cityIDFK;
     }
 }
