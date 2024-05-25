@@ -53,23 +53,40 @@
 
     <Button
         android:id="@+id/btnSalvarEndereco"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="10dp"
         android:text="Salvar"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCidades"
-        android:padding="10dp" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCidades" />
 
     <Button
         android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:padding="10dp"
         android:text="Voltar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvarEndereco"
-        android:padding="10dp" />
+        tools:layout_editor_absoluteY="677dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastrar Cidade"
+        tools:layout_editor_absoluteX="126dp"
+        tools:layout_editor_absoluteY="329dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Endereços Cadastrados"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="398dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
