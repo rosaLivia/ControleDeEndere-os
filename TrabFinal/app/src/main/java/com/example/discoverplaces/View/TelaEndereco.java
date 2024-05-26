@@ -1,5 +1,6 @@
 package com.example.discoverplaces.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class TelaEndereco extends AppCompatActivity {
     private AppDataBase db;
     private EditText editTextDescricao, editTextLatitude, editTextLongitude;
     private Spinner spinnerCidades;
-    private Button btnSalvarEndereco, btnVoltar;
+    private Button btnSalvarEndereco, btnVoltar, bntTelaCidade, EndCad ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,22 @@ public class TelaEndereco extends AppCompatActivity {
         spinnerCidades = findViewById(R.id.spinnerCidades);
         btnSalvarEndereco = findViewById(R.id.btnSalvarEndereco);
         btnVoltar = findViewById(R.id.btnVoltar);
+        bntTelaCidade = findViewById(R.id.bntTelaCidade);
+        EndCad = findViewById(R.id.bntEnderecoCad);
 
         loadCities();
 
         btnSalvarEndereco.setOnClickListener(this::salvarEndereco);
         btnVoltar.setOnClickListener(v -> finish());
+
+        EndCad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TelaEndereco.this, EnderecosCadastrados.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void loadCities() {
@@ -113,8 +125,8 @@ public class TelaEndereco extends AppCompatActivity {
         endereco.setLongitude(longitude);
         endereco.setCityIDFK(selectedCity.getCidadeID());
 
-        db.seedDAO().insertll(endereco);
+        db.seedDAO().getCidadeEndereco();
         Toast.makeText(this, "Endereço salvo com sucesso", Toast.LENGTH_SHORT).show();
-        finish();
+
     }
 }

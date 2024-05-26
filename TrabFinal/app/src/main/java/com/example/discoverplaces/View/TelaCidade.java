@@ -23,6 +23,8 @@ public class TelaCidade extends AppCompatActivity {
     private EditText editTextEstado;
     private Button btnSalvarCidade;
     private Button bntDeletar;
+
+    private Button bntAtualizar;
     private ArrayAdapter<String> adapter;
     private List<City> cidadesList;
     private AppDataBase db;
@@ -36,6 +38,7 @@ public class TelaCidade extends AppCompatActivity {
         editTextEstado = findViewById(R.id.editTextEstado);
         btnSalvarCidade = findViewById(R.id.btnSalvarCidade);
         bntDeletar = findViewById(R.id.bntDeletarCidade);
+        bntAtualizar = findViewById(R.id.bntAtualizar);
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "discoverplaces-db")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
@@ -49,6 +52,7 @@ public class TelaCidade extends AppCompatActivity {
 
         btnSalvarCidade.setOnClickListener(v -> salvarCidade());
         bntDeletar.setOnClickListener(v -> deletarCidade());
+        bntAtualizar.setOnClickListener(v -> UpdateCidade());
     }
 
     private void loadCities() {
@@ -92,31 +96,54 @@ public class TelaCidade extends AppCompatActivity {
     }
 
 
-    public void deletarCidade(){ // revisar parâmetros
+    public void deletarCidade(){
 
         String cidade = editTextCidade.getText().toString().trim();
         String estado = editTextEstado.getText().toString().trim();
 
-        //criar novo objeto que referência lista ou verificar e retirar da lista (Instância X Condição)
-
-        City C = new City();
-        C.setCidade(editTextCidade.getText().toString()); // atributos referenciados a C
-        C.setEstado(editTextEstado.getText().toString()); //
 
 
-        db.cityDAO().delete(C); // revisar se deleta diretamente e está atualizando em lista
+
+
+        City CidadeDelete = db.cityDAO().findByCityAndState(cidade,estado);
+
+        db.cityDAO().delete(CidadeDelete);
 
         loadCities();
+
+    }
+
+    public void LimparCampos(){
+        editTextCidade.setText("");
+        editTextEstado.setText("");
+
 
     }
 
 
 
 
+    public void UpdateCidade(){ //REVISAR//PROBLEA
+        String cidade = editTextCidade.getText().toString().trim();
+        String estado = editTextEstado.getText().toString().trim();
+
+
+        City CidadeUpdate = db.cityDAO().findByCityAndState(cidade, estado);
+        LimparCampos();
+        Toast.makeText(this, "Atualize os campos e clique novamente no botão atualizar", Toast.LENGTH_SHORT).show();
+        ////////novos campos para atualização do elemento encontrado
+        String updateCidade = editTextCidade.getText().toString().trim();
+        String updadeEstado = editTextEstado.getText().toString().trim();
+        bntAtualizar.setOnClickListener(v -> UpdateCidade());
+        db.cityDAO().update(CidadeUpdate);
+
+
+        loadCities();
 
 
 
 
+    }
 
 
 }
