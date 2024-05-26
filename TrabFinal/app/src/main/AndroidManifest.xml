@@ -13,9 +13,11 @@
         android:theme="@style/Theme.DiscoverPlaces"
         tools:targetApi="31">
         <activity
-            android:name=".View.EnderecosCadastrados"
+            android:name=".View.Mapa"
             android:exported="false" />
-        <!-- Remover o registro duplicado da atividade EditCity -->
+        <activity
+            android:name=".View.EnderecosCadastrados"
+            android:exported="false" /> <!-- Remover o registro duplicado da atividade EditCity -->
         <activity
             android:name=".View.EditCity"
             android:exported="false" />
