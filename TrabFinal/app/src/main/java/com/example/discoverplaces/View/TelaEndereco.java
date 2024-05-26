@@ -1,5 +1,6 @@
 package com.example.discoverplaces.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,11 @@ public class TelaEndereco extends AppCompatActivity {
     private Spinner spinnerCidades;
     private Button btnSalvarEndereco, btnVoltar;
 
+    private Button btnEnderecoCadastrados;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_endereco);
 
@@ -44,10 +48,22 @@ public class TelaEndereco extends AppCompatActivity {
         btnSalvarEndereco = findViewById(R.id.btnSalvarEndereco);
         btnVoltar = findViewById(R.id.btnVoltar);
 
+
+
+        btnEnderecoCadastrados = findViewById(R.id.btnSeedCad);
+
         loadCities();
 
         btnSalvarEndereco.setOnClickListener(this::salvarEndereco);
         btnVoltar.setOnClickListener(v -> finish());
+
+        btnEnderecoCadastrados.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TelaEndereco.this, EnderecosCadastrados.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadCities() {
@@ -117,4 +133,25 @@ public class TelaEndereco extends AppCompatActivity {
         Toast.makeText(this, "Endereço salvo com sucesso", Toast.LENGTH_SHORT).show();
         finish();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

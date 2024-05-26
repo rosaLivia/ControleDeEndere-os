@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/capadacidade"
-    tools:context=".View.TelaCidade">
+    tools:context="View.EditCity">
 
     <EditText
         android:id="@+id/editTextCidade"
@@ -31,25 +30,26 @@
         android:padding="10dp" />
 
     <Button
-        android:id="@+id/btnSalvarCidade"
+        android:id="@+id/btnSalvarEdicao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:padding="10dp"
-        android:text="Salvar Cidade"
+        android:text="Salvar Edição"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEstado" />
 
-    <ListView
-        android:id="@+id/listViewCidades"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:background="#BF15640F"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/btnDeletarCidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:text="Deletar Cidade"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvarCidade" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvarEdicao" />
 </androidx.constraintlayout.widget.ConstraintLayout>

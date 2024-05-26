@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 
 import com.example.discoverplaces.Entity.Seed;
+import com.example.discoverplaces.Entity.SeedWithCity;
 
 import java.util.List;
 
@@ -34,4 +35,8 @@ public interface SeedDAO {
 
     @Query("DELETE FROM seed")
     void deleteAll();
+
+
+    @Query("SELECT Seed.*, City.cidade, City.estado FROM Seed INNER JOIN City ON Seed.CityIDFK = City.cidadeID")
+    List<SeedWithCity> getAllSeedsWithCity();
 }

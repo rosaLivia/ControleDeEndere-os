@@ -1,20 +1,18 @@
 package com.example.discoverplaces.View;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
 import com.example.discoverplaces.DB.AppDataBase;
+import com.example.discoverplaces.View.EditCity;
 import com.example.discoverplaces.Entity.City;
 import com.example.discoverplaces.R;
-
 import java.util.List;
 
 public class TelaCidade extends AppCompatActivity {
@@ -22,7 +20,6 @@ public class TelaCidade extends AppCompatActivity {
     private EditText editTextCidade;
     private EditText editTextEstado;
     private Button btnSalvarCidade;
-    private Button bntDeletar;
     private ArrayAdapter<String> adapter;
     private List<City> cidadesList;
     private AppDataBase db;
@@ -35,20 +32,32 @@ public class TelaCidade extends AppCompatActivity {
         editTextCidade = findViewById(R.id.editTextCidade);
         editTextEstado = findViewById(R.id.editTextEstado);
         btnSalvarCidade = findViewById(R.id.btnSalvarCidade);
-        bntDeletar = findViewById(R.id.bntDeletarCidade);
+        ListView listViewCidades = findViewById(R.id.listViewCidades);
+
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "discoverplaces-db")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        ListView listViewCidades = findViewById(R.id.listViewCidades);
         listViewCidades.setAdapter(adapter);
 
         loadCities();
 
         btnSalvarCidade.setOnClickListener(v -> salvarCidade());
-        bntDeletar.setOnClickListener(v -> deletarCidade());
+
+        listViewCidades.setOnItemClickListener((parent, view, position, id) -> {
+            City selectedCity = cidadesList.get(position);
+            Intent intent = new Intent(TelaCidade.this, EditCity.class);
+            intent.putExtra("cityId", selectedCity.getCidadeID());
+            startActivity(intent);
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadCities();
     }
 
     private void loadCities() {
@@ -66,18 +75,14 @@ public class TelaCidade extends AppCompatActivity {
 
         if (!cidade.isEmpty() && !estado.isEmpty()) {
             try {
-                // Criar uma nova instância de City e configurar seus atributos
                 City newCity = new City();
                 newCity.setCidade(cidade);
                 newCity.setEstado(estado);
 
-                // Inserir a nova cidade no banco de dados usando o método insert da CityDAO
                 db.cityDAO().insert(newCity);
 
-                // Atualizar a lista de cidades na UI
                 loadCities();
 
-                // Limpar os campos de entrada
                 editTextCidade.setText("");
                 editTextEstado.setText("");
 
@@ -90,33 +95,4 @@ public class TelaCidade extends AppCompatActivity {
             Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    public void deletarCidade(){ // revisar parâmetros
-
-        String cidade = editTextCidade.getText().toString().trim();
-        String estado = editTextEstado.getText().toString().trim();
-
-        //criar novo objeto que referência lista ou verificar e retirar da lista (Instância X Condição)
-
-        City C = new City();
-        C.setCidade(editTextCidade.getText().toString()); // atributos referenciados a C
-        C.setEstado(editTextEstado.getText().toString()); //
-
-
-        db.cityDAO().delete(C); // revisar se deleta diretamente e está atualizando em lista
-
-        loadCities();
-
-    }
-
-
-
-
-
-
-
-
-
-
 }

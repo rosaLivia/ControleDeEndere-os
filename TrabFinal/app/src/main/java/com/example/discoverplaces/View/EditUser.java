@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.discoverplaces.DB.AppDataBase;
@@ -90,13 +91,22 @@ public class EditUser extends AppCompatActivity {
         }).start();
     }
 
+
     public void deleteUser(View view) {
-        new Thread(() -> {
-            db.userDAO().delete(selectedUser);
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Usuário deletado com sucesso", Toast.LENGTH_SHORT).show();
-                finish();
-            });
-        }).start();
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmar Exclusão")
+                .setMessage("Você tem certeza que deseja deletar este Usuario?")
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    new Thread(() -> {
+                        db.userDAO().delete(selectedUser);
+                        runOnUiThread(() -> {
+                            Toast.makeText(this, "Cidade deletada com sucesso", Toast.LENGTH_SHORT).show();
+                            finish(); // Optionally, close the activity
+                        });
+                    }).start();
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

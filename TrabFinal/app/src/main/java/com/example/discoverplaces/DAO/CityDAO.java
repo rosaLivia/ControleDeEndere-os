@@ -26,6 +26,8 @@ public interface CityDAO {
 
     @Delete
     void delete(City city);
+    @Query("SELECT * FROM City WHERE cidadeID = :cityId")
+    City getCityById(int cityId);
 
 
 
