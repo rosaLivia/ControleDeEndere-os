@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,7 @@ public class EnderecosCadastrados extends AppCompatActivity {
         });
 
         spinner = findViewById(R.id.spinner);
-
+        locMapa = findViewById(R.id.LocMapa);
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "discoverplaces-db")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
@@ -50,13 +51,24 @@ public class EnderecosCadastrados extends AppCompatActivity {
         locMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EnderecosCadastrados.this, Mapa.class);
-                startActivity(intent);
-
+                SeedWithCity selectedSeed = (SeedWithCity) spinner.getSelectedItem();
+                if (selectedSeed != null) {
+                    double latitude = selectedSeed.getLatitude();
+                    double longitude = selectedSeed.getLongitude();
+                    if (latitude != 0 && longitude != 0) {
+                        Intent intent = new Intent(EnderecosCadastrados.this, Mapa.class);
+                        intent.putExtra("descricao", selectedSeed.getDescricao());
+                        intent.putExtra("latitude", latitude);
+                        intent.putExtra("longitude", longitude);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(EnderecosCadastrados.this, "Latitude ou Longitude inválida", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(EnderecosCadastrados.this, "Selecione um endereço", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-
 
 
 
@@ -66,14 +78,18 @@ public class EnderecosCadastrados extends AppCompatActivity {
     private void loadSeedsWithCities() {
         new Thread(() -> {
             List<SeedWithCity> seedsWithCity = db.seedDAO().getAllSeedsWithCity();
-            List<String> seedCityList = new ArrayList<>();
-
-            for (SeedWithCity seedWithCity : seedsWithCity) {
-                seedCityList.add(seedWithCity.getDescricao() + " - " + seedWithCity.getCidade() + " (" + seedWithCity.getEstado() + ")");
-            }
 
             runOnUiThread(() -> {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, seedCityList);
+                // Crie um ArrayList de strings contendo apenas as descrições dos objetos SeedWithCity
+                List<String> descriptions = new ArrayList<>();
+                for (SeedWithCity seed : seedsWithCity) {
+                    descriptions.add(seed.getDescricao());
+                    descriptions.add(seed.getCidade());
+                    descriptions.add(seed.getEstado());
+                }
+
+                // Configure o ArrayAdapter para lidar com os objetos SeedWithCity
+                ArrayAdapter<SeedWithCity> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, seedsWithCity);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
             });

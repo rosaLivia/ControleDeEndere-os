@@ -23,19 +23,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Latitude"
-        android:inputType="numberDecimal"
+        android:inputType="numberDecimal|numberSigned"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDescricao"
-        android:padding="10dp" />
+        android:padding="10dp"
+        />
 
     <EditText
         android:id="@+id/editTextLongitude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Longitude"
-        android:inputType="numberDecimal"
+        android:inputType="numberDecimal|numberSigned"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

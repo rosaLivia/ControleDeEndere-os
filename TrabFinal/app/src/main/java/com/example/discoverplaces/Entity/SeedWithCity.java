@@ -80,4 +80,11 @@ public class SeedWithCity {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+
+    @Override
+    public String toString() {
+        // Retorna a descrição para ser exibida no spinner
+        return getDescricao() + " - " + getCidade() + " (" + getEstado() + ")";
+    }
 }
