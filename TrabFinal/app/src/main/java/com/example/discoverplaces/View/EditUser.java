@@ -1,14 +1,19 @@
 package com.example.discoverplaces.View;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.discoverplaces.DB.AppDataBase;
 import com.example.discoverplaces.Entity.User;
@@ -20,7 +25,10 @@ public class EditUser extends AppCompatActivity {
     private User selectedUser;
     private EditText editTextNome, editTextEmail;
     private Button btnSave, btnDelete;
+    private ConstraintLayout mainLayout;
 
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +40,7 @@ public class EditUser extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
+        mainLayout = findViewById(R.id.TelEditUser);
 
         int userId = getIntent().getIntExtra("userId", -1);
         if (userId == -1) {
@@ -55,6 +64,17 @@ public class EditUser extends AppCompatActivity {
 
         btnSave.setOnClickListener(this::saveUser);
         btnDelete.setOnClickListener(this::deleteUser);
+
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v); // Passa a view que foi clicada para o método hideKeyboard
+                return false;
+            }
+        });
+
+
+
     }
 
     public void saveUser(View view) {
@@ -108,5 +128,21 @@ public class EditUser extends AppCompatActivity {
                 .setNegativeButton(android.R.string.no, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null && view != null) {
+            Log.d("EditCity", "Hiding keyboard from view: " + view.toString());
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } else {
+            if (imm == null) {
+                Log.d("EditCity", "InputMethodManager is null");
+            }
+            if (view == null) {
+                Log.d("EditCity", "View is null");
+            }
+        }
     }
 }

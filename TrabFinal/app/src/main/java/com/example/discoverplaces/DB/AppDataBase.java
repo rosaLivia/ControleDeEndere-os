@@ -13,7 +13,7 @@ import com.example.discoverplaces.Entity.City;
 import com.example.discoverplaces.Entity.Seed;
 import com.example.discoverplaces.Entity.User;
 
-@Database(entities = {User.class, City.class, Seed.class}, version = 4, exportSchema = false)
+@Database(entities = {User.class, City.class, Seed.class}, version = 6, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
     private static volatile AppDataBase INSTANCE;
 

@@ -1,62 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llCadastro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/capadecadastro"
     tools:context=".View.Cadastro">
 
     <EditText
         android:id="@+id/editxtNome"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Nome"
         android:inputType="textPersonName"
-        android:layout_marginBottom="16dp"
         android:padding="10dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="1.0"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/editxtEmail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="16dp"
         android:padding="10dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@+id/editxtNome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="1.0"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/edtPassword"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Senha"
         android:inputType="textPassword"
-        android:layout_marginBottom="16dp"
         android:padding="10dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@+id/editxtEmail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="1.0"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+
+        android:backgroundTint="@color/verde_salvar"
+        android:onClick="salvar"
+        android:padding="10dp"
         android:text="Salvar"
         android:textColor="#FFFFFF"
-        android:backgroundTint="@color/verde_personalizado"
-        android:layout_marginTop="16dp"
-        android:padding="10dp"
-        android:background="@drawable/button_background"
-        android:onClick="salvar"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword"
+        app:layout_constraintWidth_percent="1.0" />
 
     <ListView
         android:id="@+id/listViewUsers"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/verde_personalizado"/>
+        android:layout_marginTop="30dp"
+        android:background="@drawable/listview_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
+    <Button
+        android:id="@+id/btnVoltarCad"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/azul_voltar"
+        android:text="Voltar"
+        android:textColorLink="#721515"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

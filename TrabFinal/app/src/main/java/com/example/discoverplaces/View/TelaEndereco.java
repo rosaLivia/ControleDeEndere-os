@@ -1,9 +1,13 @@
 package com.example.discoverplaces.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.room.Room;
 
 import com.example.discoverplaces.DB.AppDataBase;
@@ -30,6 +35,12 @@ public class TelaEndereco extends AppCompatActivity {
 
     private Button btnEnderecoCadastrados;
 
+    private Button btnCadCity;
+    private ConstraintLayout mainLayout;
+
+
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,14 +57,18 @@ public class TelaEndereco extends AppCompatActivity {
         editTextLongitude = findViewById(R.id.editTextLongitude);
         spinnerCidades = findViewById(R.id.spinnerCidades);
         btnSalvarEndereco = findViewById(R.id.btnSalvarEndereco);
-        btnVoltar = findViewById(R.id.btnVoltar);
+
+        mainLayout = findViewById(R.id.telEndCads);
+
+
+        btnVoltar = findViewById(R.id.btnVoltarSeed);
 
 
 
         btnEnderecoCadastrados = findViewById(R.id.btnSeedCad);
 
         loadCities();
-
+        btnCadCity = findViewById(R.id.btnCadCity);
         btnSalvarEndereco.setOnClickListener(this::salvarEndereco);
         btnVoltar.setOnClickListener(v -> finish());
 
@@ -64,6 +79,29 @@ public class TelaEndereco extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnCadCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TelaEndereco.this, TelaCidade.class);
+                startActivity(intent);
+            }
+        });
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v); // Passa a view que foi clicada para o método hideKeyboard
+                return false;
+            }
+        });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadCities();
     }
 
     private void loadCities() {
@@ -137,7 +175,20 @@ public class TelaEndereco extends AppCompatActivity {
 
 
 
-
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null && view != null) {
+            Log.d("EditCity", "Hiding keyboard from view: " + view.toString());
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } else {
+            if (imm == null) {
+                Log.d("EditCity", "InputMethodManager is null");
+            }
+            if (view == null) {
+                Log.d("EditCity", "View is null");
+            }
+        }
+    }
 
 
 

@@ -1,16 +1,21 @@
 package com.example.discoverplaces.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.room.Room;
 import com.example.discoverplaces.DB.AppDataBase;
-import com.example.discoverplaces.View.EditCity;
 import com.example.discoverplaces.Entity.City;
 import com.example.discoverplaces.R;
 import java.util.List;
@@ -23,7 +28,10 @@ public class TelaCidade extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private List<City> cidadesList;
     private AppDataBase db;
+    private ConstraintLayout mainLayout;
+    private Button btnVoltarCity;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +40,9 @@ public class TelaCidade extends AppCompatActivity {
         editTextCidade = findViewById(R.id.editTextCidade);
         editTextEstado = findViewById(R.id.editTextEstado);
         btnSalvarCidade = findViewById(R.id.btnSalvarCidade);
+
+        mainLayout = findViewById(R.id.telEndCads);
+        btnVoltarCity = findViewById(R.id.btnVoltarCity);
         ListView listViewCidades = findViewById(R.id.listViewCidades);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "discoverplaces-db")
@@ -52,6 +63,25 @@ public class TelaCidade extends AppCompatActivity {
             intent.putExtra("cityId", selectedCity.getCidadeID());
             startActivity(intent);
         });
+
+
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v); // Passa a view que foi clicada para o método hideKeyboard
+                return false;
+            }
+        });
+
+        btnVoltarCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Volta para a atividade anterior
+            }
+        });
+
+
+
     }
 
     @Override
@@ -93,6 +123,22 @@ public class TelaCidade extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null && view != null) {
+            Log.d("EditCity", "Hiding keyboard from view: " + view.toString());
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } else {
+            if (imm == null) {
+                Log.d("EditCity", "InputMethodManager is null");
+            }
+            if (view == null) {
+                Log.d("EditCity", "View is null");
+            }
         }
     }
 }

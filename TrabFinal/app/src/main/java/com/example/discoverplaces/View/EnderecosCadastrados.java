@@ -1,8 +1,12 @@
 package com.example.discoverplaces.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,12 +34,17 @@ public class EnderecosCadastrados extends AppCompatActivity {
 
     private Button locMapa;
 
+    private ConstraintLayout mainLayout;
+
+    private Button Voltar;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_enderecos_cadastrados);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telEndCads), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -42,12 +52,40 @@ public class EnderecosCadastrados extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinner);
         locMapa = findViewById(R.id.LocMapa);
+        mainLayout = findViewById(R.id.telEndCads);
+        Voltar = findViewById(R.id.btnVoltarEndCad);
+
+
         db = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "discoverplaces-db")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
 
         loadSeedsWithCities();
+
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v); // Passa a view que foi clicada para o método hideKeyboard
+                return false;
+            }
+        });
+
+        Voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+
+
+
+
+
+
+
         locMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,5 +132,21 @@ public class EnderecosCadastrados extends AppCompatActivity {
                 spinner.setAdapter(adapter);
             });
         }).start();
+    }
+
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null && view != null) {
+            Log.d("EditCity", "Hiding keyboard from view: " + view.toString());
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } else {
+            if (imm == null) {
+                Log.d("EditCity", "InputMethodManager is null");
+            }
+            if (view == null) {
+                Log.d("EditCity", "View is null");
+            }
+        }
     }
 }

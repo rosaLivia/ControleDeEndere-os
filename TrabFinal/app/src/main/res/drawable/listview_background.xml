@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#802196F3"/> <!-- Cor azul transparente (#80 é o valor de transparência) -->
+    <corners android:radius="16dp"/> <!-- Bordas arredondadas -->
+</shape>
